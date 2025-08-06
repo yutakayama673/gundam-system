@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  color: #00ffff;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 6px;
+  background-color: #2d2d2d;
+  border: 1px solid #666;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 13px;
+}

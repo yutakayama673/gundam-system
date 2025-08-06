@@ -1,0 +1,54 @@
+@charset "UTF-8";
+/* ホバー時に表示されるメニュー */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: cyan;
+  border: 1px solid cyan;
+  border-radius: 6px;
+  min-width: 100px;
+  z-index: 1;
+}
+
+/* ホバーでメニュー表示 */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* メニュー（PARTの中身） */
+.menu,
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  border: 1px solid cyan;
+  position: absolute;
+  display: none;
+  z-index: 999;
+}
+
+/* 「PART」ボタンをホバーしたらメニューを表示 */
+.dropdown:hover .menu {
+  display: block;
+  left: 0;
+  top: 100%;
+}
+
+/* サブメニューの位置 */
+.submenu {
+  top: 0;
+  left: 100%;
+}
+
+/* 各項目にカーソル合わせたときに submenu を表示 */
+.has-submenu:hover .submenu {
+  display: block;
+}

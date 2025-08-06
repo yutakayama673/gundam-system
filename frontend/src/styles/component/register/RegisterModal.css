@@ -1,0 +1,33 @@
+@charset "UTF-8";
+/* RegisterModal.css */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* 半透明の黒背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #1e1e1e;
+  padding: 24px 32px;
+  border-radius: 8px;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 12px #00ffff88;
+  color: #00ffff;
+  font-size: 16px;
+  text-align: center;
+  max-width: 500px;
+}
+.button-reset{
+	display: grid;
+	grid-template-columns:auto auto;
+	gap: 10px;
+	justify-content: start; 
+}

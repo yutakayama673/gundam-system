@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+
+.modal-content {
+  background-color: #101010;
+  color: #00ffff;
+  margin: 5% auto;
+  padding: 20px;
+  width: 1280px;             /* ✅ 固定幅にするか */
+  max-width: 500vw;          /* ✅ 画面幅に応じて調整 */
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 16px;
+  box-shadow: 0 0 10px #00ffff;
+  box-sizing: border-box;
+}
+.container-mobileSuits{
+      max-width: 600px;
+      margin: auto;
+      background: #101010;
+      border: 4px solid #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #0ff;
+    }

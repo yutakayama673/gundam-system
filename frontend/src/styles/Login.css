@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  font-family: "Meiryo", sans-serif;
+  background-color: #0d0d0d;
+  color: #00ffe7;
+}
+
+.login-container-login {
+  width: 600px;
+  margin: 100px auto;
+  background: #000000;
+  border: 3px solid #00ffe7;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 20px #00ffe7;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #00ffe7;
+  text-shadow: 0 0 5px #00ffe7;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #00ffe7;
+}
+
+#employeeId,
+#password {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #00ffe7;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.auth-button-container {
+  display: flex;
+  justify-content: space-between; /* ← 左右にボタンを振り分ける */
+  gap: 10px; /* 任意：ボタン同士の隙間 */
+}
+
+.login-button,
+.register-login-button {
+  width: 100px;
+  padding: 10px;
+  min-width: 0; /* これを追加 */
+  background-color: #cc0000;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+}
+.fix-register-button{
+	 height: 0px;
+	
+}
+
+/* モーダル用スタイル（必要に応じて） */
+.modal-dialog {
+  width: 520px;
+  height: 640px;
+  border: 2px solid #00ffe7;
+  background-color: #1a1a1a;
+}
+
+.modal-close-button {
+  background-color: #cc0000;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  margin: 5px;
+}
+.login-form-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.form-image-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-image-section img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.form-input-section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}

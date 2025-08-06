@@ -1,0 +1,2 @@
+parts_id	mobile_suit_number	parts_index	parts_name	parts_function	parts_discription	metal_kbn	parts_category
+01	RX-78-2	1	メインカメラ	視覚情報収集、ターゲティング、HUD表示支援	RX-78-2の頭部に搭載された高性能センサー。可視光・赤外線・紫外線対応で、全天周モニタに接続される。目標追尾とナビゲーションの中心的役割を果たす。	チタン合金,ルナチタニウム	head

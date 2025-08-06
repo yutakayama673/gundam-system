@@ -1,0 +1,5 @@
+employee_id	name	password	email
+99999999	AAA	$2a$10$2rw6x6NaHsC8R58oXjs.oOVMKBX9ZftKJC1KGG9luj8tjHQN5cuna	kayama@gmail.com
+BBBBB	BBBBB	$2a$10$q.Bh/7SxHBGjXDaC8CY/leQvSV06Mi35wUgR0aXdrV9EgT.0VBBRa	BBB@gmai.com
+MASTER	MASTER	$2a$10$Ihh9yfhLLKv5MemqQICQK.JjhZMuCnIbuQ9ZObD2D.iJl2pvivCma	linkin.yuta.k@gmail.com
+MASTER1	MASTER1	$2a$10$wink9HQ6p5fL9KaSsFoDFuOt/nbeYIVtWh0pY5PdH6KYFcXGMr5F.	master1@gmail.com

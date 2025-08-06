@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/* SelectField.css */
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  color: #00ffff;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 6px 10px;
+  background-color: #2d2d2d;
+  border: 1px solid #666;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.form-group select:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 4px #00ffff88;
+}

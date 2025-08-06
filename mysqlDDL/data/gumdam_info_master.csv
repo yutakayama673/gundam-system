@@ -1,0 +1,7 @@
+mobile_suit_id	mobile_suit_number	mobile_suit_name	pilot	start_design_date	end_design_date	message	belong	image_front	image_back
+1	RX-78-2	ガンダム	アムロ・レイ	UC0078	UC0079	RX-78-2は、地球連邦軍が初めて実戦投入した試作型モビルスーツ。ミノフスキー粒子環境下での白兵戦を想定し、ビーム兵器を標準装備。装甲にはルナ・チタニウム合金を採用し、高機動・高出力を実現。アムロ・レイが搭乗した。
+※製造元は弊社ではなく、1年戦争後、地球連邦軍による情報提供である。	1	/png/mobileSuits/RX-78-2/RX-78-2_front.png	/png/mobileSuits/RX-78-2/RX-78-2_back.png
+2	MS-06F	ザクII	シャア・アズナブル	UC0074	UC0075	愛機ザクII（C型）をパーソナル・カラーである赤に塗装し、ルウム戦役ではたった一人で5隻もの戦艦を沈め、「赤い彗星」の異名を獲得。 その名は連邦軍の末端兵士にまで轟き恐怖の存在となる。通常の3倍のスピードで走行することが可能。なぜならば通常機に比べてエンジン出力が30%程アップし、プロペラントも増加している。しかしながらシャア・アズナブル大佐の操縦技術がなければ使いこなすことはできない。
+※製造元はジオン軍の技術本部であるが、ジオン軍敗戦後、連邦軍により情報提供があったため作成	2	/png/mobileSuits/MS-06F/MS-06F_front.png	/png/mobileSuits/MS-06F/MS-06F_back.png
+3	MSN-04	サザビー	シャア・アズナブル	0087-01-01	0088-12-31	RX-78-2は、地球連邦軍が初めて実戦投入した試作型モビルスーツ。ミノフスキー粒子環境下での白兵戦を想定し、ビーム兵器を標準装備。装甲にはルナ・チタニウム合金を採用し、高機動・高出力を実現。アムロ・レイが搭乗した。	4	/png/mobileSuits/MSN-04/MSN-04_front.png	/png/mobileSuits/MSN-04/MSN-04_back.png
+12	RCAAA	AAAA	AAAA	AAAA	AAA	AAA	2	/png/mobileSuits/RCAAA/RCAAA_front.png	/png/mobileSuits/RCAAA/RCAAA_back.png

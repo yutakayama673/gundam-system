@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.gundamsystem.mapper.home.GundamInfoMasterMapper">
+
+  <select id="findByCondition" resultType="com.example.gundamsystem.model.home.GumdamInfoMaster">
+  SELECT
+    MOBILE_SUIT_NUMBER,
+    MOBILE_SUIT_NAME,
+    PILOT,
+    START_DESIGN_DATE,
+    END_DESIGN_DATE,
+    MESSAGE,
+    CASE
+        WHEN BELONG = '1' THEN '地球連邦軍'
+        WHEN BELONG = '2' THEN 'ジオン軍'
+        WHEN BELONG = '3' THEN 'エゥーゴ'
+        WHEN BELONG = '4' THEN 'ティターンズ'
+        WHEN BELONG = '5' THEN 'ネオ・ジオン軍'
+    END BELONG,
+    image_front,
+    image_back
+  FROM GUMDAM_INFO_MASTER
+  <where>
+    <if test="mobileSuitNumber != null and mobileSuitNumber != ''">
+      AND MOBILE_SUIT_NUMBER = #{mobileSuitNumber}
+    </if>
+    <if test="mobileSuitName != null and mobileSuitName != ''">
+      AND MOBILE_SUIT_NAME = #{mobileSuitName}
+    </if>
+    <if test="pilot != null and pilot != ''">
+      AND PILOT = #{pilot}
+    </if>
+  </where>
+</select>
+
+</mapper>
