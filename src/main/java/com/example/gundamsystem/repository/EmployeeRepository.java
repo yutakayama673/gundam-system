@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.example.gundamsystem.model.Employee;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface EmployeeRepository extends JpaRepository<Employee, String> {
     
     // 社員IDで検索（ログイン時などに使用）
     Employee findByEmployeeId(String employeeId);
