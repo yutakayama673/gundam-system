@@ -13,7 +13,7 @@ export const usePartsData = (msNumber, partName, parts, setFunctions, setDescrip
   };
 
   useEffect(() => {
-    if (initialPartsCount === 0) {
+    if (initialPartsCount === 0　&& parts.length > 0) {
       setInitialPartsCount(parts.length);
     }
 
@@ -50,10 +50,10 @@ export const usePartsData = (msNumber, partName, parts, setFunctions, setDescrip
       }
     };
 
-    if (msNumber && parts.length > 0 && partTypeMap[partName] && setFunctions && setDescriptions && setMaterials) {
+    if (msNumber && parts.length > 0 && partTypeMap[partName]) {
       fetchPartsDetails();
     }
-  }, [msNumber, partName, parts, setFunctions, setDescriptions, setMaterials]);
+  }, [msNumber, partName, parts]);
 
   return {
     initialPartsCount,

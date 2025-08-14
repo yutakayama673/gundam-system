@@ -15,39 +15,13 @@ export default function PartsInputList({
   materials,
   setMaterials
 }) {
-  // デバッグ用
-  console.log("PartsInputList props:", {
-    parts,
-    functions,
-    descriptions,
-    materials,
-    msNumber,
-    partName
-  });
-  // カスタムフックの使用（データ取得と初期化）
-  const {
-    initialPartsCount,
-    partTypeMap,
-  } = usePartsData(msNumber, partName, parts, setFunctions, setDescriptions, setMaterials);
+  const { initialPartsCount, partTypeMap } = usePartsData(msNumber, partName, parts, setFunctions, setDescriptions, setMaterials);
 
-  // 親から渡された状態を直接使用
   const currentFunctions = functions;
   const currentDescriptions = descriptions;
   const currentMaterials = materials;
-  
-  // デバッグ用
-  console.log("Current states:", {
-    currentFunctions,
-    currentDescriptions,
-    currentMaterials,
-    parts
-  });
 
-  const {
-    handleAdd,
-    handleRemove,
-    checkEditPermission,
-  } = usePartsOperations(
+  const { handleAdd, handleRemove, checkEditPermission } = usePartsOperations(
     parts,
     setParts,
     msNumber,
@@ -55,87 +29,41 @@ export default function PartsInputList({
     initialPartsCount,
     partTypeMap,
     (partName) => {
-      setFunctions((prev) => {
-        const updated = { ...prev };
-        delete updated[partName];
-        return updated;
-      });
-      setDescriptions((prev) => {
-        const updated = { ...prev };
-        delete updated[partName];
-        return updated;
-      });
-      setMaterials((prev) => {
-        const updated = { ...prev };
-        delete updated[partName];
-        return updated;
-      });
+      setFunctions(prev => { const updated = { ...prev }; delete updated[partName]; return updated; });
+      setDescriptions(prev => { const updated = { ...prev }; delete updated[partName]; return updated; });
+      setMaterials(prev => { const updated = { ...prev }; delete updated[partName]; return updated; });
     }
   );
 
-  const {
-    selectedIndex,
-    isDialogOpen,
-    materialOptions,
-    openMaterialDialog,
-    closeMaterialDialog,
-    toggleMaterial,
-    getSelectedMaterialsText,
-  } = useMaterialSelection(currentMaterials, setMaterials);
+  const { selectedIndex, isDialogOpen, materialOptions, openMaterialDialog, closeMaterialDialog, toggleMaterial, getSelectedMaterialsText } =
+    useMaterialSelection(currentMaterials, setMaterials);
 
   const handleChange = (index, field, value) => {
     const partKey = parts[index];
     if (!partKey?.trim()) return;
 
-    if (field === "function") {
-      setFunctions((prev) => ({ ...prev, [partKey]: value }));
-    } else if (field === "description") {
-      setDescriptions((prev) => ({ ...prev, [partKey]: value }));
-    } else if (field === "materials") {
-      setMaterials((prev) => ({ ...prev, [partKey]: value }));
-    }
+    if (field === "function") setFunctions(prev => ({ ...prev, [partKey]: value }));
+    else if (field === "description") setDescriptions(prev => ({ ...prev, [partKey]: value }));
+    else if (field === "materials") setMaterials(prev => ({ ...prev, [partKey]: value }));
   };
 
   const handlePartNameChangeWrapper = (index, newNameRaw) => {
     const newName = newNameRaw.trim();
     const oldName = parts[index];
-
     const updatedParts = [...parts];
     updatedParts[index] = newName;
     setParts(updatedParts);
 
     if (oldName === newName) return;
 
-    // 部品名変更時のデータ移行
-    setFunctions((prev) => {
-      const updated = { ...prev };
-      if (updated[oldName] !== undefined) {
-        updated[newName] = updated[oldName];
-        delete updated[oldName];
-      }
-      return updated;
-    });
-
-    setDescriptions((prev) => {
-      const updated = { ...prev };
-      if (updated[oldName] !== undefined) {
-        updated[newName] = updated[oldName];
-        delete updated[oldName];
-      }
-      return updated;
-    });
-
-    setMaterials((prev) => {
-      const updated = { ...prev };
-      if (updated[oldName] !== undefined) {
-        updated[newName] = updated[oldName];
-        delete updated[oldName];
-      }
-      return updated;
-    });
+    setFunctions(prev => { const updated = { ...prev }; if (updated[oldName] !== undefined) { updated[newName] = updated[oldName]; delete updated[oldName]; } return updated; });
+    setDescriptions(prev => { const updated = { ...prev }; if (updated[oldName] !== undefined) { updated[newName] = updated[oldName]; delete updated[oldName]; } return updated; });
+    setMaterials(prev => { const updated = { ...prev }; if (updated[oldName] !== undefined) { updated[newName] = updated[oldName]; delete updated[oldName]; } return updated; });
   };
 
   const handlePartNameClick = (index, partName) => {
+    // 新規追加部品は常に編集可能
+    if (index >= initialPartsCount) return;
     checkEditPermission(index, partName);
   };
 
@@ -149,20 +77,16 @@ export default function PartsInputList({
             type="text"
             value={part}
             placeholder="部品名"
-            readOnly={index < initialPartsCount}
+            // 初期部品だけ readOnly
+            readOnly={part != "" && index < initialPartsCount}
             onClick={() => handlePartNameClick(index, part)}
-            onChange={(e) => {
-              if (index >= initialPartsCount) {
-                handlePartNameChangeWrapper(index, e.target.value);
-              }
-            }}
+            onChange={(e) => handlePartNameChangeWrapper(index, e.target.value)}
           />
 
           <div className="form-group">
             <label htmlFor={`function-${index}`}>機能 {index + 1}</label>
             <textarea
               id={`function-${index}`}
-              name={`function-${index}`}
               value={currentFunctions?.[part] ?? ""}
               onChange={(e) => handleChange(index, "function", e.target.value)}
             />
@@ -172,32 +96,19 @@ export default function PartsInputList({
             <label htmlFor={`description-${index}`}>説明 {index + 1}</label>
             <textarea
               id={`description-${index}`}
-              name={`description-${index}`}
               value={currentDescriptions?.[part] ?? ""}
               onChange={(e) => handleChange(index, "description", e.target.value)}
             />
           </div>
 
           <div className="form-group">
-            <button
-              type="button"
-              onClick={() => openMaterialDialog(index)}
-            >
-              素材選択
-            </button>
-            <span style={{ marginLeft: "10px" }}>
-              {getSelectedMaterialsText(part)}
-            </span>
+            <button type="button" onClick={() => openMaterialDialog(index)}>素材選択</button>
+            <span style={{ marginLeft: "10px" }}>{getSelectedMaterialsText(part)}</span>
           </div>
 
           <div className="form-group">
             <label htmlFor={`partsImage-${index}`}>IMAGE FILE (.png)</label>
-            <input
-              type="file"
-              id={`partsImage-${index}`}
-              name="partsImage"
-              accept=".png"
-            />
+            <input type="file" id={`partsImage-${index}`} accept=".png" />
           </div>
 
           <button type="button" onClick={() => handleRemove(index, currentFunctions, currentDescriptions)}>－ 削除</button>
@@ -208,21 +119,17 @@ export default function PartsInputList({
 
       {isDialogOpen && selectedIndex !== null && parts[selectedIndex] && (
         <div className="modal-overlay" onClick={closeMaterialDialog}>
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              padding: "20px",
-              backgroundColor: "black",
-              borderRadius: "8px",
-              width: "300px",
-              margin: "100px auto",
-              color: "white",
-            }}
-          >
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{
+            padding: "20px",
+            backgroundColor: "black",
+            borderRadius: "8px",
+            width: "300px",
+            margin: "100px auto",
+            color: "white",
+          }}>
             <h3>素材を選択してください</h3>
             <ul style={{ listStyle: "none", padding: 0 }}>
-              {materialOptions.map((option) => (
+              {materialOptions.map(option => (
                 <li key={option.code} style={{ marginBottom: "8px" }}>
                   <label style={{ display: "block" }}>
                     <input
