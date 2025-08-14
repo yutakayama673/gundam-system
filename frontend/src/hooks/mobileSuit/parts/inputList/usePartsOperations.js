@@ -65,7 +65,7 @@ export const usePartsOperations = (
   };
 
   const checkEditPermission = (index, partName) => {
-    if (index < initialPartsCount) {
+    if (index < initialPartsCount && index !== 0) {
       alert(`「${partName}」は編集できません。\n削除してから再度部品を追加してください。`);
       return false;
     }

@@ -46,7 +46,6 @@ export default function PartsInputList({
   const {
     handleAdd,
     handleRemove,
-    handlePartNameChange,
     checkEditPermission,
   } = usePartsOperations(
     parts,
