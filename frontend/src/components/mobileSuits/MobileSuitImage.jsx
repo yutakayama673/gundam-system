@@ -1,5 +1,5 @@
 import React from "react";
-import MobileSuitPartsMenu from "./MobileSuitPartsMenu"; // パスは必要に応じて調整
+import MobileSuitPartsMenu from "./parts/MobileSuitPartsMenu"; // パスは必要に応じて調整
 
 export default function MobileSuitImage({ isFront, msData, onToggle ,msParts ,setMsParts }) {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Home.css"; // 不要かも
+import "../../styles/Home.css"; // 不要かも
 
 export default function FactionSelector({ faction, setFaction }) {
   return (

@@ -1,4 +1,4 @@
-import "../styles/component/SearchForm.css";
+import "../../styles/component/SearchForm.css";
 
 export default function SearchForm({ mobileSuitNumber, mobileSuitName, pilot, setMobileSuitNumber, setMobileSuitName, setPilot, onSearch, onReset, onEdit }) {
   return (

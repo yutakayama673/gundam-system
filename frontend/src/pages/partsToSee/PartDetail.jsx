@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPartDetail } from "../../api/controller";
+import { getPartDetail } from "../../api/mobileSuitsController";
 
 export default function PartDetail() {
   const { msNumber, partType, partName } = useParams();

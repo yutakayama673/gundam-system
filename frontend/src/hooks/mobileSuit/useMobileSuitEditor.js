@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "../styles/MobileSuitsEditor.css";
-import { updateMoblieSuitsInfo, uploadMobileSuitImages } from '../api/Controller';
-import EditorFormFields from '../components/mobileSuits/register/EditorFormFields';
-import ModalMessage from '../components/mobileSuits/register/ModalMessage';
+// hooks/useMobileSuitEditor.js
+import { useState, useEffect } from "react";
+import { updateMoblieSuitsInfo, uploadMobileSuitImages } from "../../api/mobileSuitsController";
 
 const belongNameToValue = {
   "地球連邦軍": "1",
@@ -12,11 +10,12 @@ const belongNameToValue = {
   "ネオ・ジオン軍": "5",
 };
 
-export default function MobileSuitEditor({ msData, onClose, onReload }) {
+export function useMobileSuitEditor(msData, onReload, onClose) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("編集完了!");
   const [belongValue, setBelongValue] = useState("");
 
+  // 初期化
   useEffect(() => {
     if (!msData) return;
     const belong = msData.belong;
@@ -29,7 +28,20 @@ export default function MobileSuitEditor({ msData, onClose, onReload }) {
     }
   }, [msData]);
 
-  if (!msData) return null;
+  const updateImages = async (msNumber) => {
+    const imageFront = document.getElementById("imageFront")?.files[0];
+    const imageBack = document.getElementById("imageBack")?.files[0];
+    if (!imageFront && !imageBack) {
+      if (!window.confirm("画像は変更不要でよろしいですか？")) return;
+      return;
+    }
+    try {
+      const result = await uploadMobileSuitImages(msNumber, imageFront, imageBack);
+      alert(result);
+    } catch (err) {
+      alert("画像アップロードエラー: " + err.message);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,31 +68,11 @@ export default function MobileSuitEditor({ msData, onClose, onReload }) {
     }
   };
 
-  const updateImages = async (msNumber) => {
-    const imageFront = document.getElementById('imageFront')?.files[0];
-    const imageBack = document.getElementById('imageBack')?.files[0];
-    if (!imageFront && !imageBack) {
-      if (!window.confirm('画像は変更不要でよろしいですか？')) return;
-      return;
-    }
-    try {
-      const result = await uploadMobileSuitImages(msNumber, imageFront, imageBack);
-      alert(result);
-    } catch (err) {
-      alert('画像アップロードエラー: ' + err.message);
-    }
+  return {
+    modalVisible,
+    modalMessage,
+    belongValue,
+    setBelongValue,
+    handleSubmit,
   };
-
-  return (
-    <div className="container-mobileSuits">
-      <h1>EDIT THIS MOBILE SUIT</h1>
-      <form id="register-form" onSubmit={handleSubmit}>
-        <EditorFormFields msData={msData} belongValue={belongValue} />
-        <div className="button-group">
-          <button type="submit" className="submit-button">UPDATE</button>
-        </div>
-      </form>
-      {modalVisible && <ModalMessage message={modalMessage} />}
-    </div>
-  );
 }

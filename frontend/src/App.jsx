@@ -1,12 +1,12 @@
 // App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './pages/Login'
-import Home from './pages/Home'
-import Register from './pages/register';
-import HomeRegister from './pages/HomeRegister';
-import MobileSuits from './pages/MobileSuits'
-import MobileSuitsEditor from './pages/MobileSuitsEditor'
-import PartDetail from './pages/parts/PartDetail';
+import Login from './pages/login/Login'
+import Home from './pages/home/Home'
+import Register from './pages/login/register';
+import HomeRegister from './pages/home/HomeRegister';
+import MobileSuits from './pages/mobileSuits/MobileSuits'
+import MobileSuitsEditor from './pages/mobileSuits/MobileSuitsEditor'
+import PartDetail from './pages/partsToSee/PartDetail';
 
 function App() {
   return (

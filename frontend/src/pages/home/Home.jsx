@@ -1,59 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/Home.css";
+import "../../styles/Home.css";
 import HomeRegister from "./HomeRegister";
-import SearchForm from "../components/SearchForm";
-import MobileSuitTable from "../components/MobileSuitTable";
-import { getGundamInfos, logoutUser } from "../api/Controller";
+import SearchForm from "../../components/home/SearchForm";
+import MobileSuitTable from "../../components/home/MobileSuitTable";
+import { useHome } from "../../hooks/home/useHome";
 
 export default function Home() {
-  const [mobileSuitNumber, setMobileSuitNumber] = useState("");
-  const [mobileSuitName, setMobileSuitName] = useState("");
-  const [pilot, setPilot] = useState("");
-  const [gundamData, setGundamData] = useState([]);
-  const [showRegister, setShowRegister] = useState(false);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    loadGundamData();
-  }, []);
-
-  const openRegisterModal = () => setShowRegister(true);
-  const closeRegisterModal = () => setShowRegister(false);
-
-  const loadGundamData = async () => {
-    try {
-      const params = { mobileSuitNumber, mobileSuitName, pilot };
-      const data = await getGundamInfos(params);
-      setGundamData(data);
-    } catch (error) {
-      console.error(error);
-      alert("検索に失敗しました");
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      navigate("/");
-    } catch (error) {
-      console.error("ログアウトエラー:", error);
-      alert("ログアウトに失敗しました");
-    }
-  };
-
-  const resetForm = () => {
-    setMobileSuitNumber("");
-    setMobileSuitName("");
-    setPilot("");
-    loadGundamData();
-  };
-
-  const editDesign = (ms) => {
-    const query = encodeURIComponent(JSON.stringify(ms));
-    navigate(`/mobileSuits?ms=${query}`);
-  };
+  const {
+    mobileSuitNumber, setMobileSuitNumber,
+    mobileSuitName, setMobileSuitName,
+    pilot, setPilot,
+    gundamData,
+    showRegister, openRegisterModal, closeRegisterModal,
+    loadGundamData, handleLogout, resetFormAndReload, editDesign
+  } = useHome();
 
   return (
     <div className="container">
@@ -86,8 +45,8 @@ export default function Home() {
           setMobileSuitName={setMobileSuitName}
           pilot={pilot}
           setPilot={setPilot}
-          onSearch={loadGundamData}
-          onReset={resetForm}
+          onSearch={() => loadGundamData()}
+          onReset={resetFormAndReload} 
           onEdit={openRegisterModal}
         />
       </div>

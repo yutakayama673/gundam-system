@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PartsInputList from "./PartsInputList";
-import "../../styles/Modal.css";
+import "../../../styles/Modal.css";
+import { usePartsEditorModal } from "../../../hooks/mobileSuit/parts/usePartsEditorModal";
 
 export default function PartsEditorModal({
   parts,
@@ -13,33 +14,15 @@ export default function PartsEditorModal({
   setFunctions,
   descriptions,
   setDescriptions,
-  materials,           // ← 追加
+  materials,
   setMaterials
 }) {
-  const [initialPartsCount, setInitialPartsCount] = useState(0);
-  const [isSaveDisabled, setIsSaveDisabled] = useState(false);
-
-  useEffect(() => {
-    setInitialPartsCount(parts.length);
-  }, []);
-
-  useEffect(() => {
-	
-	//新しく追加された部品（既存は対象外）
-	//部品名 / 機能 / 説明 / 素材（配列で1件以上）
-	//入力漏れが1つでもあると、保存ボタンを無効にする
-    const hasInvalidNewPart = parts
-      .slice(initialPartsCount)
-      .some((name) => {
-        const n = name?.trim();
-        const f = functions?.[n]?.trim();
-        const d = descriptions?.[n]?.trim();
-        const m = materials?.[n];
-      return !n || !f || !d || !Array.isArray(m) || m.length === 0;
-      });
-
-    setIsSaveDisabled(hasInvalidNewPart);
-  }, [parts, functions, descriptions, materials, initialPartsCount]);
+  const { isSaveDisabled } = usePartsEditorModal({
+    parts,
+    functions,
+    descriptions,
+    materials
+  });
 
   return (
     <div className="modal-overlay">
@@ -64,7 +47,6 @@ export default function PartsEditorModal({
             CANCEL
           </button>
 
-          {/* SAVE ボタン */}
           <button
             disabled={isSaveDisabled}
             title={isSaveDisabled ? "すべての項目を入力してください" : ""}
