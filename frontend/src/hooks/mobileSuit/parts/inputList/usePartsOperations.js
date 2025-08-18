@@ -7,46 +7,39 @@ export const usePartsOperations = (
   partName,
   initialPartsCount,
   partTypeMap,
-  removePartData
+  removePartData,
+  dbParts // ← 追加
 ) => {
   const handleAdd = () => {
     setParts([...parts, ""]);
   };
 
   const handleRemove = async (index, currentFunctions, currentDescriptions) => {
-    if (parts.length === 1) return;
-
     const partNameToRemove = parts[index];
-    const isInitial = index < initialPartsCount;
 
-    const isEmptyNewPart = !partNameToRemove?.trim() ||
-      !currentFunctions?.[partNameToRemove]?.trim() ||
-      !currentDescriptions?.[partNameToRemove]?.trim();
-
-    const confirmDelete = window.confirm(`「${partNameToRemove || "(未入力)"}」を削除しますか？`);
-    if (!confirmDelete) return;
-
-    if (!isInitial && isEmptyNewPart) {
-      const updatedParts = parts.filter((_, i) => i !== index);
-      setParts(updatedParts);
-      removePartData(partNameToRemove);
+    if (!partNameToRemove?.trim()) {
+      alert("削除対象の部品名がありません");
       return;
     }
 
-    try {
-      const partTypeId = partTypeMap[partName];
-      await deletePart({
-        msNumber,
-        partTypeId,
-        partName: partNameToRemove,
-      });
+    const confirmDelete = window.confirm(
+      `「${partNameToRemove}」を削除しますか？`
+    );
+    if (!confirmDelete) return;
 
+    try {
+      // DBに存在する部品ならAPIで削除
+      if (dbParts.includes(partNameToRemove)) {
+        const partTypeId = partTypeMap[partNameToRemove] || partTypeMap[partName];
+        await deletePart({ msNumber, partTypeId, partName: partNameToRemove });
+      }
+
+      // stateから削除
       const updatedParts = parts.filter((_, i) => i !== index);
       setParts(updatedParts);
       removePartData(partNameToRemove);
 
       alert("削除に成功しました");
-      window.location.reload();
     } catch (err) {
       console.error("削除に失敗:", err);
       alert("削除に失敗しました");
@@ -65,8 +58,11 @@ export const usePartsOperations = (
   };
 
   const checkEditPermission = (index, partName) => {
+    // 編集制限だけ
     if (index < initialPartsCount && index !== 0) {
-      alert(`「${partName}」は編集できません。\n削除してから再度部品を追加してください。`);
+      alert(
+        `「${partName}」は編集できません。\n削除してから再度部品を追加してください。`
+      );
       return false;
     }
     return true;
