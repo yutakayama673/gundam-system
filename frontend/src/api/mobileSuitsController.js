@@ -122,7 +122,7 @@ export async function saveParts({ msNumber, partTypeId, editParts }) {
 }
 
 /**
- * 部品登録API呼び出し
+ * 部品詳細画面呼び出し
  * @param {Object} payload - { msNumber, partsTypeId, parts }
  * @returns {Promise<Object>} - APIからのレスポンスJSON
  */
@@ -134,13 +134,13 @@ export async function getParts(payload) {
       body: JSON.stringify(payload),
     });
 
-    if (!res.ok) throw new Error("登録失敗");
+    if (!res.ok) throw new Error("取得失敗");
 
     const result = await res.json();
-    console.log("登録成功:", result);
+    console.log("取得成功:", result);
     return result;
   } catch (err) {
-    console.error("登録エラー:", err);
+    console.error("取得エラー:", err);
     throw err;
   }
 }
