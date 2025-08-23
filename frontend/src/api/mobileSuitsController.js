@@ -126,6 +126,7 @@ export async function saveParts({ msNumber, partTypeId, editParts }) {
  * @param {Object} payload - { msNumber, partsTypeId, parts }
  * @returns {Promise<Object>} - APIからのレスポンスJSON
  */
+ 
 export async function getParts(payload) {
   try {
     const res = await fetch(`${API_BASE_URL}/getMobileSuitsPartsInfo`, {
