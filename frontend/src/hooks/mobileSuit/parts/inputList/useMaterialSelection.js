@@ -9,7 +9,8 @@ export const useMaterialSelection = (materials, setMaterials) => {
     { code: "2", label: "ルナチタニウム" },
     { code: "3", label: "カーボナイト" },
     { code: "4", label: "ガンダリウム合金" },
-    { code: "5", label: "その他" },
+	{ code: "5", label: "ミノフスキー粒子" },
+    { code: "6", label: "その他" },
   ];
 
   const openMaterialDialog = (index) => {

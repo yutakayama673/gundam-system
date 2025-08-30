@@ -176,3 +176,40 @@ export async function getPartDetail(msNumber, partType, partName) {
   return await response.json();
 }
 
+/**
+ * 部品情報書き換え
+ * @param String msNumber
+ * @param String partType
+ * @param String editParts
+ * @returns {Promise<Object>} - APIからのレスポンスJSON
+ */
+export async function editParts(msNumber, partType, updatedData) {
+  try {
+    const requestBody = {
+      msNumber,
+      partType,
+      updatedData,
+    };
+
+    const response = await fetch(`${API_BASE_URL}/editPart`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();  // JSON じゃなくテキストとして読む
+      throw new Error(errorText || "部品の更新に失敗しました");
+    }
+
+    // 成功時もテキストとして返す
+    return await response.text();
+  } catch (error) {
+    console.error("部品編集APIエラー:", error.message);
+    throw error;
+  }
+}
+
+

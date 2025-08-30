@@ -21,6 +21,7 @@ import com.example.gundamsystem.constract.Constract;
 import com.example.gundamsystem.dto.mobileSuits.DeletePartRequest;
 import com.example.gundamsystem.dto.mobileSuits.SaveMobileSuitPartsRequest;
 import com.example.gundamsystem.dto.mobileSuits.SaveMobileSuitPartsRequest.PartInfo;
+import com.example.gundamsystem.dto.mobileSuits.editPartRequest;
 import com.example.gundamsystem.dto.mobileSuits.getMobileSuitsPartsInfoRequest;
 import com.example.gundamsystem.entity.home.GumdamInfoMasterEnt;
 import com.example.gundamsystem.model.home.GumdamInfoMaster;
@@ -28,6 +29,7 @@ import com.example.gundamsystem.model.mobileSuits.MobileSuitPartResponseInfo;
 import com.example.gundamsystem.model.mobileSuits.PartDetailResponseInfo;
 import com.example.gundamsystem.service.fileEdit.FileEditService;
 import com.example.gundamsystem.service.mobileSuits.DeleteMsService;
+import com.example.gundamsystem.service.mobileSuits.MobileSuitsPartsEditService;
 import com.example.gundamsystem.service.mobileSuits.MobileSuitsPartsSearchService;
 import com.example.gundamsystem.service.mobileSuits.MoblieSuitsPartsService;
 import com.example.gundamsystem.service.mobileSuits.MoblieSuitsService;
@@ -50,6 +52,9 @@ public class MoblieSuitsController {
 	
 	@Autowired
 	private MobileSuitsPartsSearchService partDetailService;
+	
+	@Autowired
+	private MobileSuitsPartsEditService mobileSuitsPartsEditService;
 	
 	
 	
@@ -180,5 +185,20 @@ public class MoblieSuitsController {
             @RequestParam String partName
     ) {
         return partDetailService.getPartDetail(msNumber, partType, partName);
+    }
+    
+    /**
+     * 
+     * @param request
+     * @return
+     */
+    @PutMapping("/editPart")
+    public ResponseEntity<?> editPart(@RequestBody editPartRequest request) {
+    	
+    	return mobileSuitsPartsEditService.editPart(
+                    request.getMsNumber(),
+                    request.getPartType(),
+                    request.getUpdatedData()
+                    );
     }
 }
