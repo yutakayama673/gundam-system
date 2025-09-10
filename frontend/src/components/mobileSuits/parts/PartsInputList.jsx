@@ -14,6 +14,8 @@ export default function PartsInputList({
   setDescriptions,
   materials,
   setMaterials,
+  images,
+  setImages,
 }) {
   const { dbParts, partTypeMap } = usePartsData(
     msNumber,
@@ -39,6 +41,7 @@ export default function PartsInputList({
       setFunctions((prev) => { const updated = { ...prev }; delete updated[partName]; return updated; });
       setDescriptions((prev) => { const updated = { ...prev }; delete updated[partName]; return updated; });
       setMaterials((prev) => { const updated = { ...prev }; delete updated[partName]; return updated; });
+	  setImages((prev) => { const updated = { ...prev }; delete updated[partName]; return updated; });
     },
     dbParts // ← 追加
   );
@@ -86,6 +89,14 @@ export default function PartsInputList({
       if (updated[oldName] !== undefined) { updated[newName] = updated[oldName]; delete updated[oldName]; }
       return updated;
     });
+	setImages((prev) => {
+	   const updated = { ...prev };
+	   if (updated[oldName] !== undefined) {
+	     updated[newName] = updated[oldName];
+	     delete updated[oldName];
+	   }
+	   return updated;
+	});
   };
 
   const handlePartNameClick = (index, partName) => {
@@ -130,7 +141,16 @@ export default function PartsInputList({
 
           <div className="form-group">
             <label>IMAGE FILE (.png)</label>
-            <input type="file" accept=".png" />
+			<input
+			    type="file"
+			    accept=".png"
+				onChange={(e) => {
+				   const file = e.target.files[0] || null;
+				   const partKey = parts[index]?.trim();
+				   console.log("onChange file:", partKey, file);  // ← debug
+				   setImages((prev) => ({ ...prev, [partKey]: file }));
+				 }}
+			  />
           </div>
 
           <button type="button" onClick={() => handleRemove(index, currentFunctions, currentDescriptions)}>－ 削除</button>

@@ -8,9 +8,11 @@ export function useMobileSuitPartsMenu(msData, msParts, setMsParts) {
   const [editParts, setEditParts] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
+  // 各入力項目の state
   const [functions, setFunctions] = useState({});
   const [descriptions, setDescriptions] = useState({});
   const [materials, setMaterials] = useState({});
+  const [images, setImages] = useState({});   // ← 追加：画像も hook 側で管理
 
   const navigate = useNavigate();
 
@@ -36,19 +38,16 @@ export function useMobileSuitPartsMenu(msData, msParts, setMsParts) {
       Weapon: 5,
     };
 
-    let partTypeId = partTypeMap[editPartName];
+    const partTypeId = partTypeMap[editPartName];
 
     try {
-      const structuredParts = editParts.map((partName, index) => {
-        const fileInput = document.getElementById(`partsImage-${index}`);
-        return {
-          name: partName,
-          function: functions[partName] || "",
-          description: descriptions[partName] || "",
-          materials: materials[partName]?.join(",") || "",
-          imageFile: fileInput?.files?.[0] || null,
-        };
-      });
+      const structuredParts = editParts.map((partName, index) => ({
+        name: partName,
+        function: functions[partName] || "",
+        description: descriptions[partName] || "",
+        materials: materials[partName]?.join(",") || "",
+        imageFile: images?.[partName] || null,   // ← state から取得
+      }));
 
       await saveParts({
         msNumber,
@@ -77,12 +76,14 @@ export function useMobileSuitPartsMenu(msData, msParts, setMsParts) {
     functions,
     descriptions,
     materials,
+    images,          // ← 追加
     navigate,
     setEditParts,
     setModalVisible,
     setFunctions,
     setDescriptions,
     setMaterials,
+    setImages,       // ← 追加
     handleEditClick,
     handleSave,
   };

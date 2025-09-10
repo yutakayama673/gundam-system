@@ -14,6 +14,7 @@ export default function MobileSuitPartsMenu({ msData, msParts, setMsParts }) {
     functions,
     descriptions,
     materials,
+	images,
     navigate,
     setEditParts,
     setModalVisible,
@@ -22,6 +23,7 @@ export default function MobileSuitPartsMenu({ msData, msParts, setMsParts }) {
     setMaterials,
     handleEditClick,
     handleSave,
+	setImages,
   } = useMobileSuitPartsMenu(msData, msParts, setMsParts);
 
   if (!msNumber) return null;
@@ -80,6 +82,9 @@ export default function MobileSuitPartsMenu({ msData, msParts, setMsParts }) {
           setDescriptions={setDescriptions}
           materials={materials}
           setMaterials={setMaterials}
+		  images={images}
+		  setImages={setImages}
+		  
         />
       )}
     </div>

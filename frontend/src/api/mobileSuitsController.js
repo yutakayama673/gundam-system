@@ -104,10 +104,12 @@ export async function saveParts({ msNumber, partTypeId, editParts }) {
     formData.append(`parts[${index}].description`, part.description || "");
     formData.append(`parts[${index}].materials`, part.materials || "");
 
-    if (part.imageFile) {
-      formData.append(`parts[${index}].imageFile`, part.imageFile); // ← Javaのフィールド名と合わせた
+	if (part.imageFile) {
+	  formData.append(`parts[${index}].imageFile`, part.imageFile, part.imageFile.name);
     }
   });
+  
+  formData.forEach((v, k) => console.log("FormData", k, v));
 
   const res = await fetch(`${API_BASE_URL}/saveMobileSuitsPartsInfo`, {
     method: "POST",

@@ -1,4 +1,4 @@
-import React from "react";
+
 import PartsInputList from "./PartsInputList";
 import "../../../styles/Modal.css";
 import { usePartsEditorModal } from "../../../hooks/mobileSuit/parts/usePartsEditorModal";
@@ -15,14 +15,33 @@ export default function PartsEditorModal({
   descriptions,
   setDescriptions,
   materials,
-  setMaterials
+  setMaterials,
+  images,
+  setImages,
 }) {
   const { isSaveDisabled } = usePartsEditorModal({
     parts,
     functions,
     descriptions,
-    materials
+    materials,
   });
+  
+  
+  const handleSave = () => {
+    console.log("images state:", images);
+    const editParts = parts.map((name, index) => ({
+      name: name?.trim() || `part_${index}`,
+      function: functions?.[name] || "",
+      description: descriptions?.[name] || "",
+      materials: Array.isArray(materials?.[name])
+        ? materials[name].join(",")
+        : "",
+      imageFile: images?.[name] || null,
+    }));
+    console.log("editParts:", editParts);
+    onSave(editParts);
+  };
+
 
   return (
     <div className="modal-overlay">
@@ -40,6 +59,8 @@ export default function PartsEditorModal({
           setDescriptions={setDescriptions}
           materials={materials}
           setMaterials={setMaterials}
+		  images={images}
+		  setImages={setImages}
         />
 
         <div style={{ marginTop: "20px", textAlign: "right" }}>
@@ -50,7 +71,7 @@ export default function PartsEditorModal({
           <button
             disabled={isSaveDisabled}
             title={isSaveDisabled ? "すべての項目を入力してください" : ""}
-            onClick={onSave}
+            onClick={handleSave}
             style={{
               cursor: isSaveDisabled ? "not-allowed" : "pointer",
               opacity: isSaveDisabled ? 0.5 : 1,
