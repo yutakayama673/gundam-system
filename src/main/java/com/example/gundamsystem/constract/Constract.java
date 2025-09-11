@@ -58,6 +58,27 @@ public class Constract {
 	        	 throw new IllegalArgumentException("不正なカテゴリ番号");
 	    }
 	}
+	/**
+	 * 
+	 * @param ctgry
+	 * @return
+	 */
+	public static String CHANGE_PARTS_ID_STR(int ctgry) {
+	    switch (ctgry) {
+	        case HEAD_NUM:
+	            return "_HEAD_";
+	        case ARMS_NUM:
+	            return "_ARMS_";
+	        case BODY_NUM:
+	            return "_BODY_";
+	        case LEGS_NUM:
+	            return "_LEGS_";
+	        case WEAPON_NUM:
+	            return "_WEAPON_";
+	        default:
+	        	 throw new IllegalArgumentException("不正なカテゴリ番号");
+	    }
+	}
 	/*
 	 * 頭
 	 */

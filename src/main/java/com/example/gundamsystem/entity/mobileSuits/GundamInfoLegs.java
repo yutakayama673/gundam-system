@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public class GundamInfoLegs implements PartsEntity{
 
     @Id
-    @Column(name = "parts_id", length = 10, nullable = false)
+    @Column(name = "parts_id", length = 50, nullable = false)
     private String partsId;
 
     @Column(name = "mobile_suit_number", length = 20, nullable = false)

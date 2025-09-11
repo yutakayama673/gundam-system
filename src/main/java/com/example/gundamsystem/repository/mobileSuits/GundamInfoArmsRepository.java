@@ -27,6 +27,11 @@ public interface GundamInfoArmsRepository extends JpaRepository<GundamInfoArms, 
         @Param("partName") String partName
     );
     
+    @Query("SELECT COALESCE(MAX(g.partsIndex), 0) " +
+            "FROM GundamInfoArms g " +
+            "WHERE g.mobileSuitNumber = :msNumber")
+     int findMaxIndex(@Param("msNumber") String msNumber);
+    
     @Modifying
     @Transactional
     @Query("DELETE FROM GundamInfoArms h WHERE h.mobileSuitNumber = :msNumber AND h.partsName = :partName")

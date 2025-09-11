@@ -19,6 +19,7 @@ import com.example.gundamsystem.entity.mobileSuits.GundamInfoHead;
 import com.example.gundamsystem.entity.mobileSuits.GundamInfoLegs;
 import com.example.gundamsystem.entity.mobileSuits.GundamInfoWeapon;
 import com.example.gundamsystem.model.mobileSuits.MobileSuitPartResponseInfo;
+import com.example.gundamsystem.service.mobileSuits.partsInsertStrategy.PartServiceStrategy;
 import com.example.gundamsystem.utils.FileEditUtils;
 
 import jakarta.transaction.Transactional;
@@ -139,99 +140,41 @@ public class MoblieSuitsPartsService extends MsService {
 	  * @return
 	  */
 	 public ResponseEntity<?> registerPartsInfo(String msNumber, int partTypeId, List<PartInfo> parts) {
-
-		 switch (partTypeId) {
-		    case Constract.HEAD_NUM: {
-		        Map<Integer, GundamInfoHead> map = headPartsRepository
-		            .findByMobileSuitNumberOrderByPartsIndex(msNumber)
-		            .stream()
-		            .collect(Collectors.toMap(GundamInfoHead::getPartsIndex, Function.identity()));
-
-		        upsertPartsInfo(
-		            parts,
-		            msNumber,
-		            map,
-		            GundamInfoHead::new,
-		            headPartsRepository::save,
-		            "head"
-		        );
-		        break;
-		    }
-
-		    case Constract.ARMS_NUM: {
-		        Map<Integer, GundamInfoArms> map = armsPartsRepository
-		            .findByMobileSuitNumberOrderByPartsIndex(msNumber)
-		            .stream()
-		            .collect(Collectors.toMap(GundamInfoArms::getPartsIndex, Function.identity()));
-
-		        upsertPartsInfo(
-		            parts,
-		            msNumber,
-		            map,
-		            GundamInfoArms::new,
-		            armsPartsRepository::save,
-		            "arms"
-		        );
-		        break;
-		    }
-
-		    case Constract.BODY_NUM: {
-		        Map<Integer, GundamInfoBody> map = bodyPartsRepository
-		            .findByMobileSuitNumberOrderByPartsIndex(msNumber)
-		            .stream()
-		            .collect(Collectors.toMap(GundamInfoBody::getPartsIndex, Function.identity()));
-
-		        upsertPartsInfo(
-		            parts,
-		            msNumber,
-		            map,
-		            GundamInfoBody::new,
-		            bodyPartsRepository::save,
-		            "body"
-		        );
-		        break;
-		    }
-
-		    case Constract.LEGS_NUM: {
-		        Map<Integer, GundamInfoLegs> map = legsPartsRepository
-		            .findByMobileSuitNumberOrderByPartsIndex(msNumber)
-		            .stream()
-		            .collect(Collectors.toMap(GundamInfoLegs::getPartsIndex, Function.identity()));
-
-		        upsertPartsInfo(
-		            parts,
-		            msNumber,
-		            map,
-		            GundamInfoLegs::new,
-		            legsPartsRepository::save,
-		            "legs"
-		        );
-		        break;
-		    }
-
-		    case Constract.WEAPON_NUM: {
-		        Map<Integer, GundamInfoWeapon> map = weaponPartsRepository
-		            .findByMobileSuitNumberOrderByPartsIndex(msNumber)
-		            .stream()
-		            .collect(Collectors.toMap(GundamInfoWeapon::getPartsIndex, Function.identity()));
-
-		        upsertPartsInfo(
-		            parts,
-		            msNumber,
-		            map,
-		            GundamInfoWeapon::new,
-		            weaponPartsRepository::save,
-		            "weapon"
-		        );
-		        break;
-		    }
-
-		    default:
+		    PartServiceStrategy<?> strategy = context.getStrategy(partTypeId);
+		    if (strategy == null) {
 		        return ResponseEntity.badRequest().body("未対応のパーツ種別です: " + partTypeId);
+		    }
+		    if (parts == null || parts.isEmpty()) {
+		        return ResponseEntity.badRequest().body("部品データが空です");
+		    }
+
+		    // DBから最大インデックスを取る
+		    int nextIndex = strategy.findMaxIndex(msNumber) + 1;
+
+		    for (PartInfo part : parts) {
+		    	
+		        String partsId = String.format("%02d", part.getPartsIndex());
+	    	
+		        if (part.getImageFile() != null && !part.getImageFile().isEmpty()) {
+		            insertFileDirInfo(msNumber, partsId, Constract.CHANGE_PARTS_CTGRY(partTypeId));
+		        }
+		        // 既存チェック（名前ベース or IDベース）
+		        boolean exists = strategy.existsByMsNumberAndPartsName(msNumber, part.getPartName());
+		        if (exists) {
+		            // 既存ならスキップ
+		            continue;
+		        }
+		        
+		        // 新規だけ処理
+		        part.setPartsIndex(nextIndex);
+
+		        strategy.save(msNumber, part);
+		    }
+
+		    return ResponseEntity.ok("部品登録完了");
 		}
-		 
-		 return ResponseEntity.ok("部品編集完了");
-	 }
+
+	
 	 /**
 	  * 部品データ削除
 	  * @param msNumber

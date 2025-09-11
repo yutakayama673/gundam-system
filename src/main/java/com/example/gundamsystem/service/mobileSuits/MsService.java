@@ -21,6 +21,7 @@ import com.example.gundamsystem.repository.mobileSuits.GundamInfoHeadRepository;
 import com.example.gundamsystem.repository.mobileSuits.GundamInfoLegsRepository;
 import com.example.gundamsystem.repository.mobileSuits.GundamInfoWeaponRepository;
 import com.example.gundamsystem.repository.mobileSuits.PartFileInfoRepository;
+import com.example.gundamsystem.service.mobileSuits.partsInsertStrategy.MobileSuitPartContext;
 import com.example.gundamsystem.utils.FileEditUtils;
 
 public class MsService {
@@ -42,6 +43,9 @@ public class MsService {
     protected GundamInfoWeaponRepository weaponPartsRepository;
     @Autowired
     protected PartFileInfoRepository partFileInfoRepo;
+    
+    @Autowired
+    protected MobileSuitPartContext context;
     
 	 /**
 	  * 部品の詳細情報を取得共通処理
