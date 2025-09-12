@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.gundamsystem.dto.mobileSuits.SaveMobileSuitPartsRequest;
 import com.example.gundamsystem.entity.mobileSuits.GundamInfoBody;
+import com.example.gundamsystem.entity.mobileSuits.GundamInfoHead;
 import com.example.gundamsystem.repository.mobileSuits.GundamInfoBodyRepository;
 
 @Service
@@ -55,4 +56,18 @@ public class BodyPartServiceStrategy implements PartServiceStrategy<GundamInfoBo
 
         repository.save(entity);
     }
+    
+    @Override
+    public void update(String msNumber, SaveMobileSuitPartsRequest.PartInfo info) {
+    	GundamInfoBody entity = repository.findByMobileSuitNumberAndPartsNameOrderByPartsIndex(
+                msNumber, info.getPartName());
+        if (entity == null) {
+            throw new IllegalArgumentException("部品が存在しません: " + info.getPartName());
+        }
+        entity.setPartsFunction(info.getPartsFunction());
+        entity.setPartsDiscription(info.getDescription());
+        entity.setMetalKbn(String.join(",", info.getMaterials()));
+        repository.save(entity); // save は update としても動く
+    }
+    
 }

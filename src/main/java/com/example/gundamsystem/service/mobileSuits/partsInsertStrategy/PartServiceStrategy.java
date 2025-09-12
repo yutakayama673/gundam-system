@@ -17,5 +17,8 @@ public interface PartServiceStrategy<T extends PartsEntity> {
 	
 	//データを登録する
     void save(String msNumber, SaveMobileSuitPartsRequest.PartInfo info);
+    
+    // データを更新する
+    void update(String msNumber, SaveMobileSuitPartsRequest.PartInfo info);
 
 }

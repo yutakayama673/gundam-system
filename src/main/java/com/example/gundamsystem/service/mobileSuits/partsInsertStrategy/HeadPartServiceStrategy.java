@@ -56,4 +56,17 @@ public class HeadPartServiceStrategy implements PartServiceStrategy<GundamInfoHe
 
         repository.save(entity);
     }
+    
+    @Override
+    public void update(String msNumber, SaveMobileSuitPartsRequest.PartInfo info) {
+        GundamInfoHead entity = repository.findByMobileSuitNumberAndPartsNameOrderByPartsIndex(
+                msNumber, info.getPartName());
+        if (entity == null) {
+            throw new IllegalArgumentException("部品が存在しません: " + info.getPartName());
+        }
+        entity.setPartsFunction(info.getPartsFunction());
+        entity.setPartsDiscription(info.getDescription());
+        entity.setMetalKbn(String.join(",", info.getMaterials()));
+        repository.save(entity); // save は update としても動く
+    }
 }

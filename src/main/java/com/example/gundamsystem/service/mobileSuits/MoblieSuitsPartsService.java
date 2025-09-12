@@ -161,8 +161,8 @@ public class MoblieSuitsPartsService extends MsService {
 		        // 既存チェック（名前ベース or IDベース）
 		        boolean exists = strategy.existsByMsNumberAndPartsName(msNumber, part.getPartName());
 		        if (exists) {
-		            // 既存ならスキップ
-		            continue;
+		            // 既存更新
+		        	strategy.update(msNumber, part);
 		        }
 		        
 		        // 新規だけ処理
