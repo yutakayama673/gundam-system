@@ -3,16 +3,19 @@ package com.example.gundamsystem.entity.mobileSuits;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "gumdam_info_weapon")
+@IdClass(PartsId.class)
 public class GundamInfoWeapon implements PartsEntity {
 
     @Id
     @Column(name = "parts_id", length = 50, nullable = false)
     private String partsId;
 
+    @Id
     @Column(name = "mobile_suit_number", length = 20, nullable = false)
     private String mobileSuitNumber;
 

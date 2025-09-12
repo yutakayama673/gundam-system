@@ -147,9 +147,6 @@ public class MoblieSuitsPartsService extends MsService {
 		        return ResponseEntity.badRequest().body("部品データが空です");
 		    }
 
-		    // DBから最大インデックスを取る
-		    int nextIndex = strategy.findMaxIndex(msNumber) + 1;
-
 		    for (PartInfo part : parts) {
 		    	
 		        String partsId = String.format("%02d", part.getPartsIndex());
@@ -163,9 +160,6 @@ public class MoblieSuitsPartsService extends MsService {
 		            // 既存更新
 		        	strategy.update(msNumber, part);
 		        }else {
-		        
-		        	// 新規だけ処理
-		        	part.setPartsIndex(nextIndex);
 
 		        	strategy.save(msNumber, part);
 		        
