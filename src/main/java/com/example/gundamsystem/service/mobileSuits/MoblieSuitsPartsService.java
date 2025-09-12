@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -163,12 +162,14 @@ public class MoblieSuitsPartsService extends MsService {
 		        if (exists) {
 		            // 既存更新
 		        	strategy.update(msNumber, part);
-		        }
+		        }else {
 		        
-		        // 新規だけ処理
-		        part.setPartsIndex(nextIndex);
+		        	// 新規だけ処理
+		        	part.setPartsIndex(nextIndex);
 
-		        strategy.save(msNumber, part);
+		        	strategy.save(msNumber, part);
+		        
+		        }
 		    }
 
 		    return ResponseEntity.ok("部品登録完了");
