@@ -9,11 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.gundamsystem.entity.mobileSuits.GundamInfoBody;
+import com.example.gundamsystem.entity.mobileSuits.PartsId;
 
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface GundamInfoBodyRepository extends JpaRepository<GundamInfoBody, String> {
+public interface GundamInfoBodyRepository extends JpaRepository<GundamInfoBody, PartsId> {
     // モビルスーツ型番ごとの部品名（部位＝Head）を取得（順番付き）
     @Query("SELECT g.partsName FROM GundamInfoBody g WHERE g.mobileSuitNumber = :msNumber ORDER BY g.partsIndex")
     List<String> findPartsByMsNumber(@Param("msNumber") String msNumber);
