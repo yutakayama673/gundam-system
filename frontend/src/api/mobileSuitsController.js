@@ -17,15 +17,17 @@ export async function fetchGumdamInfoByMsNum(mobileSuitNumber) {
  * 
  */
 export async function getMobileSuitsParts(msNumber) {
-  const res = await fetch(`${API_BASE_URL}/getMobileSuitsParts`, {
+  const res = await fetch(`${API_BASE_URL}/getMobileSuitsParts?msNumber=${encodeURIComponent(msNumber)}`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ msNumber }),
   });
-  if (!res.ok) throw new Error("通知失敗");
-  return await res.json(); // ← 必ず返す！
+
+  if (!res.ok) {
+    throw new Error("パーツ情報の取得に失敗しました");
+  }
+
+  // Springの戻り値（Map<String, Map<String, List<String>>>）をパース
+  const data = await res.json();
+  return data;
 }
 
 /**

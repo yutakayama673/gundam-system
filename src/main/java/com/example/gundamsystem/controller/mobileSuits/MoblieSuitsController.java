@@ -120,11 +120,12 @@ public class MoblieSuitsController {
 	 * @param req
 	 * @return
 	 */
-    @PostMapping("/getMobileSuitsParts")
-    public ResponseEntity<Map<String, Map<String, List<String>>>> getParts(@RequestBody Map<String, String> req) {
-        String msNumber = req.get("msNumber");
-	        return msService.getParts(msNumber);
-	 }
+	@PostMapping("/getMobileSuitsParts")
+	public ResponseEntity<Map<String, Map<String, List<String>>>> getParts(
+	    @RequestParam String msNumber
+	) {
+	    return msService.getParts(msNumber);
+	}
     
     /**
      * 
