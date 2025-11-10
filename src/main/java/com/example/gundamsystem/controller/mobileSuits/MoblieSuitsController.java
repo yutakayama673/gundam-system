@@ -126,7 +126,6 @@ public class MoblieSuitsController {
 	) {
 	    return msService.getParts(msNumber);
 	}
-    
     /**
      * 
      * @param request
