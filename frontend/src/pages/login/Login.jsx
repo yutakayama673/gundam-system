@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/login/useAuth';
-import RegisterModal from '../../components/close/RegisterModal';
+import RegisterModal from './component/RegisterModal';
 import "../../styles/Login.css";
 
 export default function Login() {

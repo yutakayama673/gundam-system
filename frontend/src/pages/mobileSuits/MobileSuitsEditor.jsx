@@ -1,7 +1,6 @@
 // MobileSuitEditor.jsx
 import "../../styles/MobileSuitsEditor.css";
-import EditorFormFields from "../../components/mobileSuits/register/EditorFormFields";
-import ModalMessage from "../../components/mobileSuits/register/ModalMessage";
+import { EditorFormFields, ModalMessage } from "./component/register/index.js";
 import { useMobileSuitEditor } from "../../hooks/mobileSuit/useMobileSuitEditor";
 
 export default function MobileSuitEditor({ msData, onClose, onReload }) {

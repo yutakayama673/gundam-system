@@ -1,9 +1,7 @@
 // MobileSuits.jsx
 import "../../styles/MobileSuits.css";
 import MobileSuitEditor from "./MobileSuitsEditor";
-import MobileSuitHeader from "../../components/mobileSuits/MobileSuitHeader";
-import MobileSuitImage from "../../components/mobileSuits/MobileSuitImage";
-import MobileSuitInfo from "../../components/mobileSuits/MobileSuitInfo";
+import { MobileSuitHeader, MobileSuitImage, MobileSuitInfo } from "./component/index.js";
 import { useMobileSuits } from "../../hooks/mobileSuit/useMobileSuits";
 
 export default function MobileSuits() {
