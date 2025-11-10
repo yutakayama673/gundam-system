@@ -61,6 +61,9 @@ export function useMobileSuitPartsMenu(msData, msParts, setMsParts) {
       const updatedParts = await getMobileSuitsParts(msNumber);
       setMsParts(updatedParts);
 
+      // ✅ ページをリロード（現在のページを再読み込み）
+      navigate(0);
+
     } catch (err) {
       console.error(err);
       alert("保存中にエラーが発生しました");
