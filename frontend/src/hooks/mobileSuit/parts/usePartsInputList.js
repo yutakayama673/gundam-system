@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { getParts, deletePart } from "../../../api/mobileSuitsController";
+import { useNavigate } from "react-router-dom";
 
 export function usePartsInputList({ parts, setParts, msNumber, partName, functions, setFunctions, descriptions, setDescriptions, materials, setMaterials }) {
+  const navigate = useNavigate();
   const partTypeMap = { Head: 1, Arms: 2, Body: 3, Legs: 4, Weapon: 5 };
   const materialOptions = [
     { code: "1", label: "チタン合金" },
@@ -73,7 +75,8 @@ export function usePartsInputList({ parts, setParts, msNumber, partName, functio
       setDescriptions(prev => { const updated = { ...prev }; delete updated[partNameToRemove]; return updated; });
       setMaterials(prev => { const updated = { ...prev }; delete updated[partNameToRemove]; return updated; });
       alert("削除に成功しました");
-      window.location.reload();
+      // ✅ 削除成功後にページをリロード
+      navigate(0);
     } catch (err) {
       console.error("削除に失敗:", err);
       alert("削除に失敗しました");

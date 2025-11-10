@@ -1,4 +1,5 @@
 import { deletePart } from "../../../../api/mobileSuitsController";
+import { useNavigate } from "react-router-dom";
 
 export const usePartsOperations = (
   parts,
@@ -10,6 +11,7 @@ export const usePartsOperations = (
   removePartData,
   dbParts // ← 追加
 ) => {
+  const navigate = useNavigate();
   const handleAdd = () => {
     setParts([...parts, ""]);
   };
@@ -40,6 +42,8 @@ export const usePartsOperations = (
       removePartData(partNameToRemove);
 
       alert("削除に成功しました");
+      // ✅ 削除成功後にページをリロード
+      navigate(0);
     } catch (err) {
       console.error("削除に失敗:", err);
       alert("削除に失敗しました");
